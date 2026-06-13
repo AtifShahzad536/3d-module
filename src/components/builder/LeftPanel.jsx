@@ -14,7 +14,7 @@ const ActivityBtn = ({ icon, label, onClick, active = false, isMobile = false })
     <span className={isMobile ? 'text-lg' : 'text-xl'}>{icon}</span>
     {!isMobile && active && <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-indigo-600 shadow-[2px_0_8px_rgba(37,99,235,0.4)]" />}
     {!isMobile && (
-      <div className="absolute left-full ml-2 px-3 py-1.5 bg-slate-900 border border-slate-100 text-slate-900 text-[9px] font-bold uppercase tracking-widest rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-xl shadow-black/50">
+      <div className="absolute left-full ml-2 px-3 py-1.5 bg-slate-900 border border-slate-100 text-white text-[9px] font-bold uppercase tracking-widest rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-xl shadow-black/50">
          {label}
       </div>
     )}

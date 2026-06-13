@@ -43,11 +43,11 @@ const ColorGrid = ({ selected, onSelect }) => (
           key={i}
           title={c.name}
           onClick={() => onSelect(c.hex)}
-          className={`swatch aspect-square rounded-none cursor-pointer border transition-all
+          className={`swatch aspect-square rounded-full cursor-pointer border transition-all
             ${isActive ? 'border-indigo-600 shadow-[0_0_10px_rgba(37,99,235,0.2)] scale-105 z-10' : 'border-slate-100 hover:border-slate-300'}`}
           style={{ backgroundColor: c.hex }}
         >
-          {isActive && <div className="w-full h-full border-[3px] border-white/30" />}
+          {isActive && <div className="w-full h-full border-[3px] border-white/30 rounded-full" />}
         </div>
       );
     })}
@@ -57,7 +57,7 @@ const ColorGrid = ({ selected, onSelect }) => (
 const SecHeader = ({ label, icon, isOpen, onToggle }) => (
   <button
     onClick={onToggle}
-    className="w-full flex items-center justify-between px-5 py-3.5 border-b border-slate-50 cursor-pointer outline-none transition-all hover:bg-white/5/50 bg-white group"
+    className="w-full flex items-center justify-between px-5 py-3.5 border-b border-slate-50 cursor-pointer outline-none transition-all hover:bg-transparent/5/50 bg-transparent group"
   >
     <div className="flex items-center gap-3">
       <span className={`text-xl transition-colors ${isOpen ? 'text-indigo-600' : 'text-slate-400'}`}>{icon}</span>
@@ -135,12 +135,12 @@ const MeshProperties = ({
   const selectedPattern = patternDecals.find(d => d.id === selectedDecalId);
 
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-transparent">
       <SecHeader label="Fill Color" icon={<VscSymbolColor />} isOpen={openSections.includes('fill')} onToggle={() => toggleSection('fill')} />
       <div className={`acc-body ${openSections.includes('fill') ? 'open' : ''}`}>
-        <div className="p-5 bg-white border-b border-slate-50">
-          <div className="flex items-center gap-4 p-3 bg-slate-50 border border-slate-100 rounded-none mb-4">
-            <div className="w-10 h-10 rounded-none border border-white shadow-sm flex-shrink-0" style={{ backgroundColor: state.color }} />
+        <div className="p-5 bg-white/30 border-b border-white/40">
+          <div className="flex items-center gap-4 p-3 bg-white/60 border border-white/60 shadow-sm rounded-xl mb-4 backdrop-blur-md">
+            <div className="w-10 h-10 rounded-2xl border border-white shadow-sm flex-shrink-0" style={{ backgroundColor: state.color }} />
             <div>
               <div className="text-[8px] font-semibold text-slate-400 uppercase tracking-widest">Active Material</div>
               <div className="text-[12px] font-semibold text-slate-800 tracking-wider">{getColorName(state.color)}</div>
@@ -152,14 +152,14 @@ const MeshProperties = ({
 
       <SecHeader label="Gradient Engine" icon={<HiOutlineSparkles />} isOpen={openSections.includes('grad')} onToggle={() => toggleSection('grad')} />
       <div className={`acc-body ${openSections.includes('grad') ? 'open' : ''}`}>
-        <div className="p-5 bg-white border-b border-slate-50">
+        <div className="p-5 bg-white/30 border-b border-white/40">
           <div className="flex gap-2 mb-5">
-            <button onClick={() => updateProp('isGrad', false)} className={`flex-1 py-2 rounded-none text-[9px] font-semibold tracking-widest border transition-all ${!state.isGrad ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-sm' : 'border-slate-100 text-slate-400'}`}>SOLID</button>
-            <button onClick={() => updateProp('isGrad', true)} className={`flex-1 py-2 rounded-none text-[9px] font-semibold tracking-widest border transition-all ${state.isGrad ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-sm' : 'border-slate-100 text-slate-400'}`}>GRADIENT</button>
+            <button onClick={() => updateProp('isGrad', false)} className={`flex-1 py-2 rounded-xl text-[9px] font-semibold tracking-widest border transition-all ${!state.isGrad ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-sm' : 'border-slate-100 text-slate-400'}`}>SOLID</button>
+            <button onClick={() => updateProp('isGrad', true)} className={`flex-1 py-2 rounded-xl text-[9px] font-semibold tracking-widest border transition-all ${state.isGrad ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-sm' : 'border-slate-100 text-slate-400'}`}>GRADIENT</button>
           </div>
           {state.isGrad && (
             <div className="fade-up space-y-5">
-              <div className="h-6 rounded-none border border-slate-100 shadow-inner" style={{ background: `linear-gradient(to right, ${state.grad1}, ${state.grad2})` }} />
+              <div className="h-6 rounded-xl border border-slate-100 shadow-inner" style={{ background: `linear-gradient(to right, ${state.grad1}, ${state.grad2})` }} />
               <ColorGrid selected={state.grad1} onSelect={(val) => updateProp('grad1', val)} />
               <ColorGrid selected={state.grad2} onSelect={(val) => updateProp('grad2', val)} />
             </div>
@@ -169,14 +169,14 @@ const MeshProperties = ({
 
       <SecHeader label="Pattern Overlay" icon={<HiOutlinePhotograph />} isOpen={openSections.includes('pat')} onToggle={() => toggleSection('pat')} />
       <div className={`acc-body ${openSections.includes('pat') ? 'open' : ''}`}>
-        <div className="p-5 bg-white border-b border-slate-50">
-          <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-none text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2 mb-4">
+        <div className="p-5 bg-white/30 border-b border-white/40">
+          <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2 mb-4">
             <span className="text-xs">💡</span>
             <span>Patterns are now placed as interactive layers! Scale, rotate, tint, and click to position them anywhere on the model.</span>
           </div>
 
           <div className="flex gap-3 mb-2">
-            <label className="flex-1 h-14 rounded-none border border-dashed border-slate-100 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-indigo-600 hover:bg-indigo-50 transition-all text-slate-300 group">
+            <label className="flex-1 h-14 rounded-xl border border-dashed border-slate-100 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-indigo-600 hover:bg-indigo-50 transition-all text-slate-300 group">
               <HiOutlinePlus className="text-lg group-hover:text-indigo-600" />
               <span className="text-[9px] font-bold group-hover:text-indigo-600 uppercase">Upload Pattern Layer</span>
               <input
@@ -199,24 +199,24 @@ const MeshProperties = ({
             <div className="mt-4 pt-4 border-t border-slate-100">
               <h4 className="text-[8.5px] font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center justify-between">
                 <span>Active Pattern Layers</span>
-                <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-none text-slate-400 border border-slate-100">{patternDecals.length}</span>
+                <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-xl text-slate-400 border border-slate-100">{patternDecals.length}</span>
               </h4>
               <div className="space-y-1.5">
                 {patternDecals.map(d => (
                   <div
                     key={d.id}
                     onClick={() => setSelectedDecalId(d.id)}
-                    className={`p-3.5 rounded-none border transition-all flex items-center justify-between bg-white cursor-pointer ${selectedDecalId === d.id ? 'border-indigo-600 bg-indigo-50/20' : 'border-slate-50 hover:border-slate-100'}`}
+                    className={`p-4 rounded-2xl border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between bg-transparent cursor-pointer ${selectedDecalId === d.id ? 'border-indigo-600 bg-indigo-50/20' : 'border-slate-50 hover:border-slate-100'}`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-none border border-slate-100 bg-cover bg-center flex-shrink-0" style={{ backgroundImage: `url(${d.imageUrl})` }} />
+                      <div className="w-8 h-8 rounded-lg border border-slate-100 bg-cover bg-center flex-shrink-0" style={{ backgroundImage: `url(${d.imageUrl})` }} />
                       <div className="flex flex-col text-left">
                         <span className="text-[10px] font-semibold truncate max-w-[150px]">{d.text || 'Pattern Layer'}</span>
                         <span className="text-[7px] font-semibold text-slate-300 uppercase mt-0.5">SIZE {((d.decalScale || 0.8) * 100).toFixed(0)}%</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-4 h-4 rounded-none border border-white shadow-sm flex-shrink-0" style={{ backgroundColor: d.color }} />
+                      <div className="w-4 h-4 rounded-full border border-white shadow-sm flex-shrink-0" style={{ backgroundColor: d.color }} />
                       <button onClick={(e) => { e.stopPropagation(); removeDecal(d.id); }} className="w-5 h-5 flex items-center justify-center text-slate-800 hover:text-red-500 transition-colors"><BiTrash /></button>
                     </div>
                   </div>
@@ -226,9 +226,9 @@ const MeshProperties = ({
           )}
 
           {selectedPattern && (
-            <div className="mt-6 p-4 bg-slate-50 rounded-none border border-slate-100 space-y-6 text-left">
+            <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-6 text-left">
               {/* Tip Banner */}
-              <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-none text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
+              <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
                 <span className="text-xs">💡</span>
                 <span>Tip: click anywhere on the 3D model to move this layer.</span>
               </div>
@@ -254,7 +254,7 @@ const MeshProperties = ({
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selectedPattern.decalScale || 0.8}
                     onChange={(e) => {
                       const v = parseFloat(e.target.value);
@@ -274,7 +274,7 @@ const MeshProperties = ({
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selectedPattern.decalScaleX !== undefined ? selectedPattern.decalScaleX : (selectedPattern.decalScale || 0.8)}
                     onChange={(e) => updateDecal(selectedPattern.id, { decalScaleX: parseFloat(e.target.value) })}
                   />
@@ -291,7 +291,7 @@ const MeshProperties = ({
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selectedPattern.decalScaleY !== undefined ? selectedPattern.decalScaleY : (selectedPattern.decalScale || 0.8)}
                     onChange={(e) => updateDecal(selectedPattern.id, { decalScaleY: parseFloat(e.target.value) })}
                   />
@@ -314,7 +314,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeTop || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeTop: parseFloat(e.target.value) })}
                     />
@@ -331,7 +331,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeBottom || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeBottom: parseFloat(e.target.value) })}
                     />
@@ -348,7 +348,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeLeft || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeLeft: parseFloat(e.target.value) })}
                     />
@@ -365,7 +365,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeRight || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeRight: parseFloat(e.target.value) })}
                     />
@@ -382,7 +382,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeTopLeft || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeTopLeft: parseFloat(e.target.value) })}
                     />
@@ -399,7 +399,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeTopRight || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeTopRight: parseFloat(e.target.value) })}
                     />
@@ -416,7 +416,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeBottomLeft || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeBottomLeft: parseFloat(e.target.value) })}
                     />
@@ -433,7 +433,7 @@ const MeshProperties = ({
                       min="0.0"
                       max="1.0"
                       step="0.01"
-                      className="w-full h-1 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                      className="w-full h-1 bg-slate-200 rounded-xl appearance-none cursor-pointer accent-indigo-600"
                       value={selectedPattern.pFadeBottomRight || 0.0}
                       onChange={(e) => updateDecal(selectedPattern.id, { pFadeBottomRight: parseFloat(e.target.value) })}
                     />
@@ -452,7 +452,7 @@ const MeshProperties = ({
                   min="-180"
                   max="180"
                   step="1"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={Math.round((selectedPattern.rotation || 0) * 180 / Math.PI)}
                   onChange={(e) => updateDecal(selectedPattern.id, { rotation: parseFloat(e.target.value) * Math.PI / 180 })}
                 />
@@ -489,7 +489,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
         <button
           key={c.hex + i}
           onClick={() => safeUpdate({ [targetProp]: c.hex })}
-          className={`w-7 h-7 rounded-none border cursor-pointer transition-all hover:scale-110 ${selected?.[targetProp] === c.hex ? 'border-indigo-600 shadow-lg ring-1 ring-indigo-100 z-10' : 'border-slate-100 hover:border-slate-400'}`}
+          className={`w-7 h-7 rounded-full border cursor-pointer transition-all hover:scale-110 ${selected?.[targetProp] === c.hex ? 'border-indigo-600 shadow-lg ring-1 ring-indigo-100 z-10' : 'border-slate-100 hover:border-slate-400'}`}
           style={{ backgroundColor: c.hex }}
           title={c.name}
         />
@@ -500,7 +500,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
   const renderSection = (id, label, content) => {
     const isOpen = openSection === id;
     return (
-      <div key={id} className={`bg-white border-b border-slate-100 ${isLocked ? 'opacity-40 pointer-events-none' : ''}`}>
+      <div key={id} className={`bg-transparent border-b border-slate-100 ${isLocked ? 'opacity-40 pointer-events-none' : ''}`}>
         <button
           onClick={() => { if (!isLocked) setOpenSection(isOpen ? null : id); }}
           className={`w-full flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors cursor-pointer ${isOpen ? 'bg-slate-50' : ''}`}
@@ -518,18 +518,18 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
   };
 
   return (
-    <div className="flex flex-col bg-white">
-      <div className="p-6 bg-white border-b border-slate-50">
+    <div className="flex flex-col bg-transparent">
+      <div className="p-6 bg-white/30 border-b border-white/40">
         <h3 className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-4 flex items-center justify-between">
           <span>Active Text Layers</span>
-          <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-none text-slate-400 border border-slate-100">{textDecals.length} TOTAL</span>
+          <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-xl text-slate-400 border border-slate-100">{textDecals.length} TOTAL</span>
         </h3>
         <div className="space-y-1.5">
           {textDecals.map((d, i) => (
             <div
               key={d.id}
               onClick={() => setSelectedDecalId(d.id)}
-              className={`p-3.5 rounded-none border transition-all flex items-center justify-between bg-white cursor-pointer
+              className={`p-4 rounded-2xl border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between bg-transparent cursor-pointer
                 ${selectedDecalId === d.id ? 'border-indigo-600 bg-indigo-50/20' : 'border-slate-50 hover:border-slate-100'}`}
             >
               <div className="flex flex-col">
@@ -537,25 +537,25 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                 <span className="text-[7px] font-semibold text-slate-300 uppercase tracking-widest mt-0.5">{d.font} • SIZE {((d.decalScale || 0.15) * 100).toFixed(0)}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded-none border border-white shadow-sm" style={{ backgroundColor: d.color }} />
+                <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ backgroundColor: d.color }} />
                 <button onClick={(e) => { e.stopPropagation(); removeDecal(d.id); }} className="w-5 h-5 flex items-center justify-center text-slate-800 hover:text-red-500 transition-colors"><HiOutlineTrash /></button>
               </div>
             </div>
           ))}
           {textDecals.length === 0 && (
-            <div className="text-center py-10 border border-dashed border-slate-100 rounded-none bg-slate-50/30">
+            <div className="text-center py-10 border border-dashed border-slate-100 rounded-xl bg-slate-50/30">
               <p className="text-[8px] font-semibold text-slate-300 uppercase tracking-widest">No Text Layers Added</p>
             </div>
           )}
         </div>
       </div>
 
-      <div className="bg-white p-6 border-b border-slate-50 relative z-10">
+      <div className="bg-transparent p-6 border-b border-slate-50 relative z-10">
         <div className="flex gap-2">
           <input
             type="text"
             placeholder="TYPE HERE..."
-            className="flex-1 bg-slate-50 border border-slate-100 rounded-none px-4 py-3 text-[10px] font-semibold uppercase tracking-widest focus:border-indigo-600 focus:bg-white outline-none transition-all"
+            className="flex-1 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-[10px] font-semibold uppercase tracking-widest focus:border-indigo-600 focus:bg-transparent outline-none transition-all"
             onChange={(e) => {
               const val = e.target.value.toUpperCase();
               setLocalText(val);
@@ -566,7 +566,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
           />
           <button
             onClick={() => addDecal('text', localText || 'TEAM NAME')}
-            className="px-6 bg-slate-800 text-slate-900 rounded-none text-[10px] font-semibold uppercase tracking-widest hover:bg-indigo-600 transition-all active:scale-95"
+            className="px-6 bg-slate-900 text-white rounded-xl shadow-md text-[10px] font-semibold uppercase tracking-widest hover:bg-indigo-600 transition-all active:scale-95"
           >
             ADD
           </button>
@@ -587,7 +587,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                   <button
                     key={f}
                     onClick={() => safeUpdate({ font: f })}
-                    className={`py-3 rounded-none border text-[10px] font-semibold cursor-pointer transition-all ${selected?.font === f ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}
+                    className={`py-3 rounded-xl border text-[10px] font-semibold cursor-pointer transition-all ${selected?.font === f ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}
                     style={{ fontFamily: f }}
                   >
                     {f}
@@ -600,11 +600,11 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
 
         {renderSection('outline', 'Outline Layer 1', (
           <div className="space-y-5">
-            <div className="flex items-center justify-between bg-slate-50 p-3 rounded-none">
+            <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl">
               <p className="text-[9px] font-semibold text-slate-400 uppercase">Thickness</p>
-              <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-1 rounded-none shadow-sm">{selected?.outline1Width || 0}PX</span>
+              <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-1 rounded-xl shadow-sm">{selected?.outline1Width || 0}PX</span>
             </div>
-            <input type="range" min="0" max="12" step="1" className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600" value={selected?.outline1Width || 0} onChange={(e) => safeUpdate({ outline1Width: parseInt(e.target.value) })} />
+            <input type="range" min="0" max="12" step="1" className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600" value={selected?.outline1Width || 0} onChange={(e) => safeUpdate({ outline1Width: parseInt(e.target.value) })} />
             <div>
               <p className="text-[9px] font-semibold text-slate-400 uppercase mb-3">Outline Color</p>
               {renderColorGrid('outline1Color')}
@@ -614,11 +614,11 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
 
         {renderSection('outline2', 'Outline Layer 2', (
           <div className="space-y-5">
-            <div className="flex items-center justify-between bg-slate-50 p-3 rounded-none">
+            <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl">
               <p className="text-[9px] font-semibold text-slate-400 uppercase">Outer Thickness</p>
-              <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-1 rounded-none shadow-sm">{selected?.outline2Width || 0}PX</span>
+              <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-1 rounded-xl shadow-sm">{selected?.outline2Width || 0}PX</span>
             </div>
-            <input type="range" min="0" max="12" step="1" className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600" value={selected?.outline2Width || 0} onChange={(e) => safeUpdate({ outline2Width: parseInt(e.target.value) })} />
+            <input type="range" min="0" max="12" step="1" className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600" value={selected?.outline2Width || 0} onChange={(e) => safeUpdate({ outline2Width: parseInt(e.target.value) })} />
             <div>
               <p className="text-[9px] font-semibold text-slate-400 uppercase mb-3">Outer Color</p>
               {renderColorGrid('outline2Color')}
@@ -628,22 +628,22 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
 
         {renderSection('effect', 'Text Curvature', (
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-none border border-slate-50 bg-white">
+            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-50 bg-transparent">
               <span className="text-[10px] font-semibold text-slate-300 uppercase tracking-wider">Arch Effect</span>
               <button
                 onClick={() => safeUpdate({ effect: selected?.effect === 'arch' ? 'none' : 'arch' })}
                 className={`w-10 h-5 rounded-full transition-colors relative cursor-pointer ${selected?.effect === 'arch' ? 'bg-indigo-600' : 'bg-slate-200'}`}
               >
-                <div className={`absolute top-1 left-1 w-3 h-3 rounded-full bg-white transition-all ${selected?.effect === 'arch' ? 'translate-x-5' : ''}`} />
+                <div className={`absolute top-1 left-1 w-3 h-3 rounded-full bg-transparent transition-all ${selected?.effect === 'arch' ? 'translate-x-5' : ''}`} />
               </button>
             </div>
             {selected?.effect === 'arch' && (
-              <div className="p-4 bg-white border border-slate-50 space-y-4">
+              <div className="p-4 bg-transparent border border-slate-50 space-y-4">
                 <div className="flex items-center justify-between">
                   <p className="text-[9px] font-semibold text-slate-400 uppercase">Bend Intensity</p>
                   <span className="text-[10px] font-semibold text-indigo-600">{((selected?.effectIntensity || 0.5) * 100).toFixed(0)}%</span>
                 </div>
-                <input type="range" min="0.1" max="1.5" step="0.1" className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600" value={selected?.effectIntensity || 0.5} onChange={(e) => safeUpdate({ effectIntensity: parseFloat(e.target.value) })} />
+                <input type="range" min="0.1" max="1.5" step="0.1" className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600" value={selected?.effectIntensity || 0.5} onChange={(e) => safeUpdate({ effectIntensity: parseFloat(e.target.value) })} />
               </div>
             )}
           </div>
@@ -652,7 +652,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
         {renderSection('transform', 'Layer Size & Rotation', (
           <div className="space-y-6">
             {/* Tip Banner */}
-            <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-none text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
+            <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
               <span className="text-xs">💡</span>
               <span>Tip: click anywhere on the 3D model to move this layer.</span>
             </div>
@@ -668,7 +668,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                   min="0.03"
                   max="1.5"
                   step="0.01"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={selected?.decalScale || 0.15}
                   onChange={(e) => {
                     const v = parseFloat(e.target.value);
@@ -687,7 +687,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                   min="0.03"
                   max="1.5"
                   step="0.01"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={selected?.decalScaleX !== undefined ? selected.decalScaleX : (selected?.decalScale || 0.15)}
                   onChange={(e) => safeUpdate({ decalScaleX: parseFloat(e.target.value) })}
                 />
@@ -703,7 +703,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                   min="0.03"
                   max="1.5"
                   step="0.01"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={selected?.decalScaleY !== undefined ? selected.decalScaleY : (selected?.decalScale || 0.15)}
                   onChange={(e) => safeUpdate({ decalScaleY: parseFloat(e.target.value) })}
                 />
@@ -719,7 +719,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
                   min="-180"
                   max="180"
                   step="1"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={Math.round((selected?.rotation || 0) * 180 / Math.PI)}
                   onChange={(e) => safeUpdate({ rotation: parseFloat(e.target.value) * Math.PI / 180 })}
                 />
@@ -795,13 +795,13 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
   };
 
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-transparent">
       {/* ADD LOGO - PREMIUM OVERHAUL */}
-      <div className="p-6 bg-white border-b border-slate-50">
+      <div className="p-6 bg-white/30 border-b border-white/40">
         <h3 className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Add Components</h3>
-        <label className="group relative flex flex-col items-center justify-center py-10 border border-dashed border-slate-100 rounded-none bg-slate-50/30 hover:bg-indigo-50/30 hover:border-indigo-600 transition-all cursor-pointer overflow-hidden">
+        <label className="group relative flex flex-col items-center justify-center py-10 border border-dashed border-slate-100 rounded-xl bg-slate-50/30 hover:bg-indigo-50/30 hover:border-indigo-600 transition-all cursor-pointer overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-50/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="w-12 h-12 rounded-none bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:scale-110 transition-all mb-4">
+          <div className="w-12 h-12 rounded-xl bg-transparent shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:scale-110 transition-all mb-4">
             <HiOutlineCloudUpload size={24} className="animate-bounce-subtle" />
           </div>
           <div className="text-center relative z-10">
@@ -814,20 +814,20 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
 
       {/* ACTIVE LOGOS LIST */}
       {imageDecals.length > 0 && (
-        <div className="p-6 bg-white border-b border-slate-50">
+        <div className="p-6 bg-white/30 border-b border-white/40">
           <h3 className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-4 flex items-center justify-between">
             <span>Active Logos</span>
-            <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-none text-slate-400 border border-slate-100">{imageDecals.length}</span>
+            <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-xl text-slate-400 border border-slate-100">{imageDecals.length}</span>
           </h3>
           <div className="space-y-1.5">
             {imageDecals.map(d => (
               <div
                 key={d.id}
                 onClick={() => setSelectedDecalId(d.id)}
-                className={`p-3.5 rounded-none border transition-all flex items-center justify-between bg-white cursor-pointer ${selectedDecalId === d.id ? 'border-indigo-600 bg-indigo-50/20' : 'border-slate-50 hover:border-slate-100'}`}
+                className={`p-4 rounded-2xl border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between bg-transparent cursor-pointer ${selectedDecalId === d.id ? 'border-indigo-600 bg-indigo-50/20' : 'border-slate-50 hover:border-slate-100'}`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-none border border-slate-100 bg-cover bg-center flex-shrink-0" style={{ backgroundImage: `url(${d.imageUrl})` }} />
+                  <div className="w-8 h-8 rounded-lg border border-slate-100 bg-cover bg-center flex-shrink-0" style={{ backgroundImage: `url(${d.imageUrl})` }} />
                   <div className="flex flex-col text-left">
                     <span className="text-[10px] font-semibold truncate max-w-[150px]">{d.text || 'Logo'}</span>
                     <span className="text-[7px] font-semibold text-slate-300 uppercase mt-0.5">SIZE {((d.decalScale || 0.12) * 100).toFixed(0)}%</span>
@@ -839,9 +839,9 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
           </div>
 
           {selected && (
-            <div className="mt-6 p-4 bg-slate-50 rounded-none border border-slate-100 space-y-6 text-left">
+            <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-6 text-left">
               {/* Tip Banner */}
-              <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-none text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
+              <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[8.5px] text-indigo-700/80 font-bold uppercase tracking-wider flex items-center gap-2">
                 <span className="text-xs">💡</span>
                 <span>Tip: click anywhere on the 3D model to move this layer.</span>
               </div>
@@ -861,7 +861,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selected.decalScale || 0.12}
                     onChange={(e) => {
                       const v = parseFloat(e.target.value);
@@ -881,7 +881,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selected.decalScaleX !== undefined ? selected.decalScaleX : (selected.decalScale || 0.12)}
                     onChange={(e) => safeUpdate({ decalScaleX: parseFloat(e.target.value) })}
                   />
@@ -898,7 +898,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
                     min="0.03"
                     max="4.0"
                     step="0.01"
-                    className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                     value={selected.decalScaleY !== undefined ? selected.decalScaleY : (selected.decalScale || 0.12)}
                     onChange={(e) => safeUpdate({ decalScaleY: parseFloat(e.target.value) })}
                   />
@@ -915,7 +915,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
                   min="-180"
                   max="180"
                   step="1"
-                  className="w-full h-1.5 bg-slate-200 rounded-none appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                   value={Math.round((selected.rotation || 0) * 180 / Math.PI)}
                   onChange={(e) => safeUpdate({ rotation: parseFloat(e.target.value) * Math.PI / 180 })}
                 />
@@ -928,7 +928,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
       {/* LOGO CATEGORIES */}
       <div className="flex-1">
         {logoCategories.map((cat, i) => (
-          <div key={cat.name} className="border-b border-slate-50 bg-white">
+          <div key={cat.name} className="border-b border-slate-50 bg-transparent">
             <button
               onClick={() => setExpandedCat(expandedCat === i ? null : i)}
               className={`w-full flex items-center justify-between px-5 py-3.5 transition-colors cursor-pointer hover:bg-slate-50 ${expandedCat === i ? 'bg-slate-50' : ''}`}
@@ -940,13 +940,13 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
               <span className={`text-[10px] transition-transform duration-300 ${expandedCat === i ? 'rotate-45 text-indigo-600' : 'text-slate-300'}`}>＋</span>
             </button>
             {expandedCat === i && (
-              <div className="p-4 bg-white border-t border-slate-50">
+              <div className="p-4 bg-transparent border-t border-slate-50">
                 <div className="grid grid-cols-3 gap-2">
                   {cat.items?.map((item, idx) => (
                     <button
                       key={idx}
                       onClick={() => addDecal('image', item.name, item.url)}
-                      className="aspect-square bg-slate-50 border border-slate-100 rounded-none p-2 hover:border-indigo-600 hover:bg-indigo-50 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
+                      className="aspect-square bg-slate-50 border border-slate-100 rounded-xl p-2 hover:border-indigo-600 hover:bg-indigo-50 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
                     >
                       <img src={item.url} alt={item.name} className="w-full h-full object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
                       <span className="text-[6px] font-semibold text-slate-400 uppercase truncate w-full text-center group-hover:text-indigo-600">{item.name}</span>
@@ -968,7 +968,7 @@ const StudioConfigTab = ({ globalPattern, setGlobalPattern, lightingPreset, setL
   const renderSection = (id, label, icon, content) => {
     const isOpen = openSection === id;
     return (
-      <div className="bg-white border-b border-slate-50">
+      <div className="bg-white/30 border-b border-white/40">
         <button
           onClick={() => setOpenSection(isOpen ? null : id)}
           className={`w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 transition-colors cursor-pointer ${isOpen ? 'bg-slate-50' : ''}`}
@@ -979,38 +979,38 @@ const StudioConfigTab = ({ globalPattern, setGlobalPattern, lightingPreset, setL
           </div>
           <span className={`text-[10px] transition-transform duration-300 ${isOpen ? 'rotate-45 text-indigo-600' : 'text-slate-300'}`}>＋</span>
         </button>
-        {isOpen && <div className="p-5 bg-white">{content}</div>}
+        {isOpen && <div className="p-5 bg-transparent">{content}</div>}
       </div>
     );
   };
 
   return (
-    <div className="flex flex-col bg-white h-full font-['Outfit']">
+    <div className="flex flex-col bg-transparent h-full font-['Outfit']">
       {renderSection('pattern', 'Fabric Options', <HiOutlineCube />, (
         <div className="grid grid-cols-2 gap-2">
           {['none', 'carbon', 'camo', 'dots'].map(p => (
-            <button key={p} onClick={() => setGlobalPattern(p === 'none' ? null : p)} className={`py-3 rounded-none text-[9px] font-semibold uppercase tracking-widest border transition-all ${globalPattern === p || (p === 'none' && !globalPattern) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{p}</button>
+            <button key={p} onClick={() => setGlobalPattern(p === 'none' ? null : p)} className={`py-3 rounded-xl text-[9px] font-semibold uppercase tracking-widest border transition-all ${globalPattern === p || (p === 'none' && !globalPattern) ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{p}</button>
           ))}
         </div>
       ))}
       {renderSection('finish', 'Material Finish', <HiOutlineColorSwatch />, (
         <div className="grid grid-cols-3 gap-2">
           {['matte', 'gloss', 'metallic'].map(f => (
-            <button key={f} onClick={() => setMaterialFinish(f)} className={`py-3 rounded-none text-[9px] font-semibold uppercase tracking-widest border transition-all ${materialFinish === f ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{f}</button>
+            <button key={f} onClick={() => setMaterialFinish(f)} className={`py-3 rounded-xl text-[9px] font-semibold uppercase tracking-widest border transition-all ${materialFinish === f ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{f}</button>
           ))}
         </div>
       ))}
       {renderSection('lighting', 'Studio Lighting', <HiOutlineLightningBolt />, (
         <div className="grid grid-cols-3 gap-2">
           {['city', 'studio', 'night'].map(l => (
-            <button key={l} onClick={() => setLightingPreset(l)} className={`py-3 rounded-none text-[9px] font-semibold uppercase tracking-widest border transition-all ${lightingPreset === l ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{l}</button>
+            <button key={l} onClick={() => setLightingPreset(l)} className={`py-3 rounded-xl text-[9px] font-semibold uppercase tracking-widest border transition-all ${lightingPreset === l ? 'border-indigo-600 bg-indigo-50 text-indigo-600' : 'border-slate-100 text-slate-400 hover:border-slate-300'}`}>{l}</button>
           ))}
         </div>
       ))}
       {renderSection('interaction', 'Viewport Settings', <HiOutlineCursorClick />, (
         <div className="space-y-4">
-          <button onClick={() => setMouseFollow(!mouseFollow)} className={`w-full py-3.5 rounded-none text-[10px] font-semibold uppercase tracking-widest border transition-all flex items-center justify-center gap-3 ${mouseFollow ? 'bg-indigo-600 text-black border-indigo-600' : 'bg-white text-slate-400 border-slate-100 hover:border-indigo-600'}`}>
-            <div className={`w-2 h-2 rounded-none ${mouseFollow ? 'bg-white' : 'bg-slate-200'}`} />
+          <button onClick={() => setMouseFollow(!mouseFollow)} className={`w-full py-3.5 rounded-xl text-[10px] font-semibold uppercase tracking-widest border transition-all flex items-center justify-center gap-3 ${mouseFollow ? 'bg-indigo-600 text-black border-indigo-600' : 'bg-transparent text-slate-400 border-slate-100 hover:border-indigo-600'}`}>
+            <div className={`w-2 h-2 rounded-xl ${mouseFollow ? 'bg-transparent' : 'bg-slate-200'}`} />
             360 Mouse Follow: {mouseFollow ? 'ACTIVE' : 'OFF'}
           </button>
         </div>
@@ -1026,35 +1026,35 @@ const CheckoutRosterTab = ({ roster, setRoster, onCheckout }) => {
   const updateRow = (id, field, value) => setRoster(roster.map(r => r.id === id ? { ...r, [field]: value } : r));
 
   return (
-    <div className="flex flex-col bg-white h-full">
-      <div className="p-6 bg-white border-b border-slate-50">
+    <div className="flex flex-col bg-transparent h-full">
+      <div className="p-6 bg-white/30 border-b border-white/40">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-[10px] font-semibold uppercase tracking-widest text-slate-800">Order Roster</h3>
             <p className="text-[8px] font-semibold text-slate-400 uppercase mt-1">{roster.length} Total Units</p>
           </div>
-          <button onClick={addRow} className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-black rounded-none text-[9px] font-semibold uppercase tracking-widest shadow-lg shadow-indigo-500/10"><HiOutlineUserAdd /> Add Unit</button>
+          <button onClick={addRow} className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-xl text-[9px] font-semibold uppercase tracking-widest shadow-lg shadow-indigo-500/10"><HiOutlineUserAdd /> Add Unit</button>
         </div>
-        <div className="flex items-center justify-between bg-slate-50 rounded-none p-3 border border-slate-100">
+        <div className="flex items-center justify-between bg-slate-50 rounded-xl p-3 border border-slate-100">
           <div className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-none flex items-center justify-center text-sm ${isPersonalized ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-400'}`}><BiText /></div>
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${isPersonalized ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-400'}`}><BiText /></div>
             <div>
               <p className="text-[9px] font-semibold uppercase tracking-widest text-slate-300">Personalization</p>
               <p className="text-[7px] font-semibold text-slate-400 uppercase">Names & Numbers</p>
             </div>
           </div>
-          <button onClick={() => setIsPersonalized(!isPersonalized)} className={`w-10 h-5 rounded-full relative transition-all duration-300 ${isPersonalized ? 'bg-indigo-600' : 'bg-slate-300'}`}><div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all duration-300 ${isPersonalized ? 'left-6' : 'left-1'}`} /></button>
+          <button onClick={() => setIsPersonalized(!isPersonalized)} className={`w-10 h-5 rounded-full relative transition-all duration-300 ${isPersonalized ? 'bg-indigo-600' : 'bg-slate-300'}`}><div className={`absolute top-1 w-3 h-3 bg-transparent rounded-full transition-all duration-300 ${isPersonalized ? 'left-6' : 'left-1'}`} /></button>
         </div>
       </div>
       <div className="flex-1 overflow-y-auto p-4 py-12 space-y-4 space-y-3 right-scroll" data-lenis-prevent>
         {roster.map((row, index) => (
-          <div key={row.id} className="bg-white rounded-none border border-slate-50 p-3 relative group">
+          <div key={row.id} className="bg-transparent rounded-2xl border border-slate-100 p-4 relative shadow-sm group">
             <div className="flex items-center gap-3">
-              <div className="w-6 h-8 rounded-none bg-slate-50 flex items-center justify-center text-[9px] font-semibold text-slate-400 border border-slate-100">{index + 1}</div>
+              <div className="w-6 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-[9px] font-semibold text-slate-400 border border-slate-100">{index + 1}</div>
               <div className="flex-1 grid grid-cols-12 gap-2">
                 {isPersonalized ? (
                   <>
-                    <div className="col-span-6"><input type="text" value={row.name} onChange={(e) => updateRow(row.id, 'name', e.target.value.toUpperCase())} placeholder="PLAYER NAME" className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold focus:ring-1 focus:ring-indigo-600 transition-all text-slate-800 placeholder-slate-400 min-h-[36px]" /></div>
+                    <div className="col-span-6"><input type="text" value={row.name} onChange={(e) => updateRow(row.id, 'name', e.target.value.toUpperCase())} placeholder="PLAYER NAME" className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold rounded-xl focus:ring-2 focus:ring-indigo-600 focus:outline-none transition-all shadow-inner text-slate-800 placeholder-slate-400 min-h-[36px]" /></div>
                     <div className="col-span-3"><input type="text" value={row.number} onChange={(e) => updateRow(row.id, 'number', e.target.value)} placeholder="00" maxLength={3} className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold text-center focus:ring-1 focus:ring-indigo-600 transition-all text-slate-800 placeholder-slate-400 min-h-[36px]" /></div>
                     <div className="col-span-3"><select value={row.size} onChange={(e) => updateRow(row.id, 'size', e.target.value)} className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold appearance-none focus:ring-1 focus:ring-indigo-600 transition-all cursor-pointer text-slate-800 text-center min-h-[36px]">{['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
                   </>
@@ -1067,8 +1067,8 @@ const CheckoutRosterTab = ({ roster, setRoster, onCheckout }) => {
           </div>
         ))}
       </div>
-      <div className="p-6 bg-white border-t border-slate-100">
-        <button onClick={onCheckout} className="w-full bg-indigo-600 text-black py-4 rounded-none text-[11px] font-semibold uppercase tracking-[0.2em] shadow-xl shadow-indigo-500/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-3">Finalize & Checkout <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /></button>
+      <div className="p-6 bg-transparent border-t border-slate-100">
+        <button onClick={onCheckout} className="w-full bg-indigo-600 text-white py-4 rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] shadow-xl shadow-indigo-500/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-3">Finalize & Checkout <div className="w-1.5 h-1.5 rounded-full bg-transparent animate-pulse" /></button>
       </div>
     </div>
   );
@@ -1085,28 +1085,29 @@ const RightPanel = (props) => {
   ];
 
   return (
-    <div className="flex flex-1 md:flex-none w-full md:w-[420px] h-full flex-shrink-0 border-t md:border-t-0 md:border-l border-slate-100 bg-white flex-col z-50 relative overflow-hidden min-h-0">
-      <div className="flex border-b border-slate-100 bg-white flex-shrink-0 overflow-x-auto no-scrollbar scroll-smooth">
-        {mainTabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-1 min-w-[80px] md:min-w-0 py-4 px-1 flex flex-col items-center gap-2 transition-all relative cursor-pointer flex-shrink-0 rounded-none ${activeTab === tab.id ? 'text-indigo-600 bg-white' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}`}>
-            <span className="text-xl">{tab.icon}</span>
-            <span className="text-[8px] font-semibold uppercase tracking-widest text-center leading-tight">
-              {tab.label.split(' ').map((s, i) => <span key={i} className="block">{s}</span>)}
-            </span>
-            {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600" />}
-          </button>
-        ))}
+    <div className="flex flex-1 md:flex-none w-full md:w-[420px] h-[calc(100%-2rem)] my-4 mr-4 flex-shrink-0 rounded-3xl border border-white/40 bg-transparent/70 backdrop-blur-3xl shadow-[0_8px_32px_rgba(31,38,135,0.07)] flex-col z-50 relative overflow-hidden min-h-0">
+      <div className="p-3 border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
+        <div className="flex bg-transparent p-1 rounded-2xl shadow-sm border border-slate-100 overflow-x-auto no-scrollbar scroll-smooth">
+          {mainTabs.map(tab => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-1 min-w-[70px] md:min-w-0 py-3 px-2 flex flex-col items-center gap-1.5 transition-all duration-300 ease-out cursor-pointer flex-shrink-0 rounded-xl ${activeTab === tab.id ? 'text-indigo-600 bg-indigo-50 shadow-sm border border-indigo-100 scale-100' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50 scale-95 border border-transparent'}`}>
+              <span className="text-lg">{tab.icon}</span>
+              <span className="text-[8px] font-bold uppercase tracking-widest text-center leading-tight">
+                {tab.label.split(' ').map((s, i) => <span key={i} className="block">{s}</span>)}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="px-6 py-4 border-b border-slate-50 flex items-center justify-between bg-white flex-shrink-0">
+      <div className="px-6 py-4 border-b border-slate-50 flex items-center justify-between bg-transparent flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-none bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100"><BiCube size={22} /></div>
+          <div className="w-10 h-10 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100"><BiCube size={22} /></div>
           <div>
             <div className="text-[10px] font-semibold text-slate-900 uppercase tracking-widest">{props.activeMesh ? props.activeMesh.replace(/_/g, ' ') : 'Select Part'}</div>
             <div className="text-[8px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">Active Workspace</div>
           </div>
         </div>
-        <div className="px-2 py-1 rounded-none border border-green-200 bg-green-50 text-green-600 text-[8px] font-semibold tracking-widest uppercase">Live View</div>
+        <div className="px-2 py-1 rounded-xl border border-green-200 bg-green-50 text-green-600 text-[8px] font-semibold tracking-widest uppercase">Live View</div>
       </div>
 
       <div className="flex-1 relative min-h-0">
