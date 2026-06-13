@@ -466,7 +466,8 @@ const MeshProperties = ({
 };
 
 const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, updateDecal, removeDecal }) => {
-  const selected = decals.find(d => d.id === selectedDecalId);
+  const textDecals = decals.filter(d => d.type === 'text');
+  const selected = textDecals.find(d => d.id === selectedDecalId);
   const [localText, setLocalText] = useState('');
   const [openSection, setOpenSection] = useState('font');
   const isLocked = !selected;
@@ -521,10 +522,10 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
       <div className="p-6 bg-white border-b border-slate-50">
         <h3 className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-4 flex items-center justify-between">
           <span>Active Text Layers</span>
-          <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-none text-slate-400 border border-slate-100">{decals.length} TOTAL</span>
+          <span className="text-[8px] bg-slate-50 px-2 py-0.5 rounded-none text-slate-400 border border-slate-100">{textDecals.length} TOTAL</span>
         </h3>
         <div className="space-y-1.5">
-          {decals.map((d, i) => (
+          {textDecals.map((d, i) => (
             <div
               key={d.id}
               onClick={() => setSelectedDecalId(d.id)}
@@ -541,7 +542,7 @@ const NamesNumbersTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal
               </div>
             </div>
           ))}
-          {decals.length === 0 && (
+          {textDecals.length === 0 && (
             <div className="text-center py-10 border border-dashed border-slate-100 rounded-none bg-slate-50/30">
               <p className="text-[8px] font-semibold text-slate-300 uppercase tracking-widest">No Text Layers Added</p>
             </div>
