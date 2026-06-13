@@ -1085,7 +1085,7 @@ const RightPanel = (props) => {
   ];
 
   return (
-    <div className="flex flex-1 md:flex-none w-full md:w-[420px] h-[calc(100%-2rem)] my-4 mr-4 flex-shrink-0 rounded-3xl border border-white/40 bg-transparent/70 backdrop-blur-3xl shadow-[0_8px_32px_rgba(31,38,135,0.07)] flex-col z-50 relative overflow-hidden min-h-0">
+    <div className="tour-step-3 flex flex-1 md:flex-none w-full md:w-[420px] h-[calc(100%-2rem)] my-4 mr-4 flex-shrink-0 rounded-3xl border border-white/40 bg-transparent/70 backdrop-blur-3xl shadow-[0_8px_32px_rgba(31,38,135,0.07)] flex-col z-50 relative overflow-hidden min-h-0">
       <div className="p-3 border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
         <div className="flex bg-transparent p-1 rounded-2xl shadow-sm border border-slate-100 overflow-x-auto no-scrollbar scroll-smooth">
           {mainTabs.map(tab => (

@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { HiOutlineFolderOpen, HiOutlineSaveAs, HiOutlineDownload, HiOutlineCubeTransparent, HiOutlineArrowLeft } from 'react-icons/hi';
 import { VscHistory, VscEdit } from 'react-icons/vsc';
+import { useBuilder } from '../../context/BuilderContext';
 
 const Navbar = ({ onBack, backTo, isLandingPage }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const barRef = useRef(null);
+  const { actions } = useBuilder();
 
   useEffect(() => {
     const handler = (e) => {
@@ -49,6 +51,12 @@ const Navbar = ({ onBack, backTo, isLandingPage }) => {
         label: 'View',
         items: [
           { label: 'Toggle HUD', action: () => window.dispatchEvent(new CustomEvent('eay:toggleHUD')) },
+        ]
+    },
+    {
+        label: 'Help',
+        items: [
+          { label: 'Guided Tour', action: () => actions?.setRunTour(true) },
         ]
     }
   ];
@@ -107,7 +115,7 @@ const Navbar = ({ onBack, backTo, isLandingPage }) => {
       {/* ── Editor Menu Bar ── */}
       <div className="flex items-stretch flex-1">
         {menuData.map((menu) => (
-          <div key={menu.label} className="relative flex items-stretch">
+          <div key={menu.label} className={`${menu.label === 'File' ? 'tour-step-4' : ''} relative flex items-stretch`}>
             <button
               className={`px-4 h-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5 transition-colors outline-none
                 ${activeMenu === menu.label ? 'bg-slate-100 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}
@@ -153,12 +161,18 @@ const Navbar = ({ onBack, backTo, isLandingPage }) => {
       </div>
 
       {/* ── System Status ── */}
-      <div className="ml-auto flex items-center gap-3 px-5 border-l border-slate-100">
+      <div className="tour-step-5 ml-auto flex items-center gap-3 px-5 border-l border-slate-100">
         <div className="hidden lg:flex items-center gap-4">
           <div className="flex flex-col items-end leading-none">
             <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.3em]">Build</span>
             <span className="text-[9px] font-bold text-slate-600 tracking-widest">v2.0-DARK</span>
           </div>
+          <button 
+            onClick={() => actions?.setRunTour(true)}
+            className="flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100 transition-colors"
+          >
+            <span className="text-[8px] font-black text-indigo-600 uppercase tracking-widest ">Tour</span>
+          </button>
           <div className="flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-200 rounded-md">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse " />
             <span className="text-[8px] font-black text-green-600 uppercase tracking-widest ">Live</span>

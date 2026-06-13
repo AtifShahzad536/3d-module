@@ -33,6 +33,7 @@ const initialState = {
   roster: [{ id: Date.now(), name: '', number: '', size: 'L' }],
   
   refreshKey: 0,
+  runTour: false,
 };
 
 function builderReducer(state, action) {
@@ -137,6 +138,8 @@ function builderReducer(state, action) {
       return { ...state, selectedDecalId: action.payload };
     case 'SET_ROSTER':
       return { ...state, roster: action.payload };
+    case 'SET_RUN_TOUR':
+      return { ...state, runTour: action.payload };
     case 'SET_FROM_PAGE':
       return { ...state, fromPage: action.payload };
     case 'INCREMENT_REFRESH_KEY':
@@ -188,6 +191,7 @@ export function BuilderProvider({ children }) {
     setRoster: (roster) => dispatch({ type: 'SET_ROSTER', payload: roster }),
     setFromPage: (page) => dispatch({ type: 'SET_FROM_PAGE', payload: page }),
     incrementRefreshKey: () => dispatch({ type: 'INCREMENT_REFRESH_KEY' }),
+    setRunTour: (run) => dispatch({ type: 'SET_RUN_TOUR', payload: run }),
     loadSavedDesignData: (data) => dispatch({ type: 'LOAD_SAVED_DESIGN_DATA', payload: data }),
   }), []);
 

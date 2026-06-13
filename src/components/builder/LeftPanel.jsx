@@ -85,7 +85,7 @@ const LeftPanel = ({
       )}
 
       {/* ── 2. SIDE BAR (Explorer Drawer) ── */}
-      <div className={`transition-all duration-500 ease-in-out z-[60] flex flex-col bg-white  border-r border-slate-100 flex-shrink-0 overflow-hidden shadow-2xl
+      <div className={`tour-step-2 transition-all duration-500 ease-in-out z-[60] flex flex-col bg-white  border-r border-slate-100 flex-shrink-0 overflow-hidden shadow-2xl
         ${isMobile ? 'fixed inset-y-0 left-0 shadow-2xl' : 'relative'}
         ${isHUDVisible && isSidebarOpen ? (isMobile ? 'w-64' : 'w-56') : 'w-0 opacity-0 pointer-events-none'}`}
       >
@@ -146,7 +146,7 @@ const LeftPanel = ({
       </div>
 
       {/* ── 3. 3D VIEWPORT ── */}
-      <div className="flex-1 relative bg-white overflow-hidden min-h-[400px] md:min-h-0">
+      <div className="tour-step-1 flex-1 relative bg-white overflow-hidden min-h-[400px] md:min-h-0">
         <ModelViewer
           modelUrl={modelUrl}
           meshStates={meshStates}

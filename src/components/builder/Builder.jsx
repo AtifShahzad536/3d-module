@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
 import { useBuilder } from '../../context/BuilderContext';
+import OnboardingTour from '../ui/OnboardingTour';
 
 const Builder = memo(() => {
   const { state, actions } = useBuilder();
@@ -453,6 +454,8 @@ const Builder = memo(() => {
           </>
         )}
       </AnimatePresence>
+      
+      <OnboardingTour run={state.runTour} onTourEnd={() => actions.setRunTour(false)} />
     </div>
   );
 });
