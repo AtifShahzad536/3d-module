@@ -179,17 +179,17 @@ const MeshProperties = ({
             <label className="flex-1 h-14 rounded-none border border-dashed border-slate-100 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-indigo-600 hover:bg-indigo-50 transition-all text-slate-300 group">
               <HiOutlinePlus className="text-lg group-hover:text-indigo-600" />
               <span className="text-[9px] font-bold group-hover:text-indigo-600 uppercase">Upload Pattern Layer</span>
-              <input 
-                type="file" 
+              <input
+                type="file"
                 accept="image/*"
-                className="hidden" 
+                className="hidden"
                 onChange={e => {
                   if (e.target.files?.[0]) {
                     const url = URL.createObjectURL(e.target.files[0]);
                     addDecal('pattern', 'Pattern Layer', url);
                     e.target.value = '';
                   }
-                }} 
+                }}
               />
             </label>
           </div>
@@ -242,7 +242,7 @@ const MeshProperties = ({
               {/* Sizing & Stretching */}
               <div className="space-y-4 pt-4 border-t border-slate-100">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Sizing & Stretching</p>
-                
+
                 {/* Uniform Scale */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -301,7 +301,7 @@ const MeshProperties = ({
               {/* Edge Blending (Gradient Fade) */}
               <div className="space-y-4 pt-4 border-t border-slate-100 text-left">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Edge Blending (Gradient Fade)</p>
-                
+
                 <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                   {/* Fade Top */}
                   <div>
@@ -848,7 +848,7 @@ const LogosFlagsTab = ({ decals, selectedDecalId, setSelectedDecalId, addDecal, 
               {/* Sizing & Stretching */}
               <div className="space-y-4 pt-4 border-t border-slate-100">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Sizing & Stretching</p>
-                
+
                 {/* Uniform Scale */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -1045,20 +1045,20 @@ const CheckoutRosterTab = ({ roster, setRoster, onCheckout }) => {
           <button onClick={() => setIsPersonalized(!isPersonalized)} className={`w-10 h-5 rounded-full relative transition-all duration-300 ${isPersonalized ? 'bg-indigo-600' : 'bg-slate-300'}`}><div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all duration-300 ${isPersonalized ? 'left-6' : 'left-1'}`} /></button>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 right-scroll" data-lenis-prevent>
+      <div className="flex-1 overflow-y-auto p-4 py-12 space-y-4 space-y-3 right-scroll" data-lenis-prevent>
         {roster.map((row, index) => (
           <div key={row.id} className="bg-white rounded-none border border-slate-50 p-3 relative group">
             <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-none bg-slate-50 flex items-center justify-center text-[9px] font-semibold text-slate-400 border border-slate-100">{index + 1}</div>
+              <div className="w-6 h-8 rounded-none bg-slate-50 flex items-center justify-center text-[9px] font-semibold text-slate-400 border border-slate-100">{index + 1}</div>
               <div className="flex-1 grid grid-cols-12 gap-2">
                 {isPersonalized ? (
                   <>
-                    <div className="col-span-6"><input type="text" value={row.name} onChange={(e) => updateRow(row.id, 'name', e.target.value.toUpperCase())} placeholder="PLAYER NAME" className="w-full bg-slate-50 border-none px-2 py-2 text-[10px] font-semibold focus:ring-1 focus:ring-indigo-600 transition-all" /></div>
-                    <div className="col-span-3"><input type="text" value={row.number} onChange={(e) => updateRow(row.id, 'number', e.target.value)} placeholder="00" maxLength={3} className="w-full bg-slate-50 border-none px-2 py-2 text-[10px] font-semibold text-center focus:ring-1 focus:ring-indigo-600 transition-all" /></div>
-                    <div className="col-span-3"><select value={row.size} onChange={(e) => updateRow(row.id, 'size', e.target.value)} className="w-full bg-slate-50 border-none px-2 py-2 text-[10px] font-semibold appearance-none focus:ring-1 focus:ring-indigo-600 transition-all cursor-pointer">{['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                    <div className="col-span-6"><input type="text" value={row.name} onChange={(e) => updateRow(row.id, 'name', e.target.value.toUpperCase())} placeholder="PLAYER NAME" className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold focus:ring-1 focus:ring-indigo-600 transition-all text-slate-800 placeholder-slate-400 min-h-[36px]" /></div>
+                    <div className="col-span-3"><input type="text" value={row.number} onChange={(e) => updateRow(row.id, 'number', e.target.value)} placeholder="00" maxLength={3} className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold text-center focus:ring-1 focus:ring-indigo-600 transition-all text-slate-800 placeholder-slate-400 min-h-[36px]" /></div>
+                    <div className="col-span-3"><select value={row.size} onChange={(e) => updateRow(row.id, 'size', e.target.value)} className="w-full bg-slate-50 border-none px-3 py-2.5 text-xs font-semibold appearance-none focus:ring-1 focus:ring-indigo-600 transition-all cursor-pointer text-slate-800 text-center min-h-[36px]">{['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
                   </>
                 ) : (
-                  <div className="col-span-12 flex items-center justify-between bg-slate-50 px-3 py-1.5"><span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Select Size</span><select value={row.size} onChange={(e) => updateRow(row.id, 'size', e.target.value)} className="bg-transparent border-none py-1 text-[12px] font-semibold text-indigo-600 appearance-none focus:ring-0 cursor-pointer text-right">{['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                  <div className="col-span-12 flex items-center justify-between bg-slate-50 px-4 py-2.5 min-h-[36px]"><span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Select Size</span><select value={row.size} onChange={(e) => updateRow(row.id, 'size', e.target.value)} className="bg-transparent border-none py-1 text-sm font-bold text-indigo-600 appearance-none focus:ring-0 cursor-pointer text-right">{['YS', 'YM', 'YL', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
                 )}
               </div>
               <button onClick={() => removeRow(row.id)} className="w-6 h-6 flex items-center justify-center text-slate-800 hover:text-red-500 transition-colors"><HiOutlineTrash /></button>
