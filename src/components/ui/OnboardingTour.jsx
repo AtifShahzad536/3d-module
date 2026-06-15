@@ -32,7 +32,6 @@ const steps = [
 
 const OnboardingTour = ({ run, onTourEnd }) => {
   const [key, setKey] = useState(0);
-
   useEffect(() => {
     if (run) {
       setKey(prev => prev + 1); // Force reset when triggered

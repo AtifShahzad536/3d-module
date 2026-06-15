@@ -61,7 +61,7 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
-    <div className="flex-1 w-full min-h-0 bg-slate-50 text-slate-900 font-['Outfit'] relative flex flex-col md:flex-row overflow-hidden">
+    <div className="flex-1 w-full bg-slate-50 text-slate-900 font-['Outfit'] relative flex flex-col h-full overflow-y-auto custom-scrollbar">
       
       {/* Mobile Backdrop */}
       {showSettings && (
@@ -71,14 +71,43 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
         />
       )}
 
-      {/* ── LEFT SIDEBAR (SETTINGS) ── */}
-      <div className={`
-        absolute inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out
-        md:relative md:translate-x-0 md:flex-shrink-0 md:z-20
-        w-[85vw] sm:w-[350px] md:w-[350px] lg:w-[400px]
-        bg-white border-r border-slate-200 overflow-y-auto h-full shadow-2xl md:shadow-lg custom-scrollbar
-        ${showSettings ? 'translate-x-0' : '-translate-x-full'}
-      `}>
+      {/* HERO SECTION AT THE TOP */}
+      <div className="w-full relative overflow-hidden bg-white text-slate-900 p-8 md:p-16 lg:p-24 border-b border-slate-200 flex flex-col justify-center min-h-[400px] shrink-0">
+        {/* Abstract Backgrounds */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-indigo-50/50 to-white"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-100/50 to-transparent mix-blend-multiply"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-200 rounded-full blur-[80px] opacity-40 animate-pulse"></div>
+        <div className="absolute -bottom-24 left-1/4 w-72 h-72 bg-cyan-100 rounded-full blur-[80px] opacity-50"></div>
+        
+        <div className="relative z-10 max-w-3xl flex flex-col gap-5">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-1 bg-indigo-600 rounded-full"></div>
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-indigo-600">Next-Gen Customization</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.05] text-slate-900">
+            Build Your Ultimate <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">Sports Apparel</span>
+          </h1>
+          
+          <p className="text-base md:text-lg font-medium text-slate-600 leading-relaxed max-w-2xl mt-2">
+            Welcome to the Elite Configurator. Explore our library of premium 3D models, apply custom colors, advanced patterns, and real-time material finishes to craft your perfect team identity before manufacturing.
+          </p>
+        </div>
+      </div>
+
+      {/* TWO COLUMN LAYOUT BELOW HERO */}
+      <div className="flex flex-col md:flex-row flex-1 w-full shrink-0 relative">
+        
+        {/* ── LEFT SIDEBAR (SETTINGS) ── */}
+        <div className={`
+          absolute inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out
+          md:sticky md:top-0 md:translate-x-0 md:flex-shrink-0 md:z-20
+          w-[85vw] sm:w-[350px] md:w-[350px] lg:w-[400px]
+          bg-white border-r border-slate-200 shadow-2xl md:shadow-lg
+          overflow-y-auto custom-scrollbar h-screen
+          ${showSettings ? 'translate-x-0' : '-translate-x-full'}
+        `}>
         
         {/* Mobile Close Button */}
         <button 
@@ -167,7 +196,7 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
       </div>
 
       {/* ── RIGHT CONTENT (GALLERY) ── */}
-      <div className="flex-1 bg-slate-50 overflow-y-auto custom-scrollbar relative flex flex-col">
+      <div className="flex-1 bg-slate-50 relative flex flex-col">
         
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
@@ -245,10 +274,10 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
               </div>
             ))}
           </div>
-
         </div>
       </div>
-
+      {/* END TWO COLUMN LAYOUT */}
+      </div>
     </div>
   );
 };
