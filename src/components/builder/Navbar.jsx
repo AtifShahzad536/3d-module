@@ -62,7 +62,7 @@ const Navbar = ({ onBack, backTo, isLandingPage }) => {
   ];
 
   if (isLandingPage) {
-    menuData = menuData.filter(m => m.label !== 'File' && m.label !== 'View');
+    menuData = menuData.filter(m => m.label !== 'File' && m.label !== 'View' && m.label !== 'Help');
   }
 
   // Helper to determine where the Exit button should go
@@ -167,12 +167,14 @@ const Navbar = ({ onBack, backTo, isLandingPage }) => {
             <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.3em]">Build</span>
             <span className="text-[9px] font-bold text-slate-600 tracking-widest">v2.0-DARK</span>
           </div>
-          <button 
-            onClick={() => actions?.setRunTour(true)}
-            className="flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100 transition-colors"
-          >
-            <span className="text-[8px] font-black text-indigo-600 uppercase tracking-widest ">Tour</span>
-          </button>
+          {!isLandingPage && (
+            <button 
+              onClick={() => actions?.setRunTour(true)}
+              className="flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100 transition-colors"
+            >
+              <span className="text-[8px] font-black text-indigo-600 uppercase tracking-widest ">Tour</span>
+            </button>
+          )}
           <div className="flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-200 rounded-md">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse " />
             <span className="text-[8px] font-black text-green-600 uppercase tracking-widest ">Live</span>
