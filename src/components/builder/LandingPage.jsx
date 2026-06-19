@@ -66,7 +66,7 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
       {/* Mobile Backdrop */}
       {showSettings && (
         <div 
-          className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] md:hidden transition-opacity"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] md:hidden transition-opacity"
           onClick={() => setShowSettings(false)}
         />
       )}
@@ -101,8 +101,8 @@ const LandingPage = ({ availableDesigns, onSelectDesign }) => {
         
         {/* ── LEFT SIDEBAR (SETTINGS) ── */}
         <div className={`
-          absolute inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out
-          md:sticky md:top-0 md:translate-x-0 md:flex-shrink-0 md:z-20
+          fixed md:sticky inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out
+          md:top-0 md:translate-x-0 md:flex-shrink-0 md:z-20
           w-[85vw] sm:w-[350px] md:w-[350px] lg:w-[400px]
           bg-white border-r border-slate-200 shadow-2xl md:shadow-lg
           overflow-y-auto custom-scrollbar h-screen
